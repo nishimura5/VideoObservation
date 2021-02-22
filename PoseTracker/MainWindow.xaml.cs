@@ -115,23 +115,28 @@ namespace PoseTracker
         }
 
         private void ExecProcess(string mode) {
-            List<TargetFile> targetFileList = new List<TargetFile>();
-            targetFileList = targetFiles.GetFiletList();
-            foreach (TargetFile targetFile in targetFileList)
-            {
-                string trkFolderPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(targetFile.MovPath)), "trk");
-                string trkMovFilePath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(targetFile.MovPath)), "trkmov", targetFile.MovName);
+            try {
+                List<TargetFile> targetFileList = new List<TargetFile>();
+                targetFileList = targetFiles.GetFiletList();
+                foreach (TargetFile targetFile in targetFileList)
+                {
+                    string trkFolderPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(targetFile.MovPath)), "trk");
+                    string trkMovFilePath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(targetFile.MovPath)), "trkmov", targetFile.MovName);
 
-                // 第1引数がコマンド、第2引数がコマンドの引数
-                ProcessStartInfo app = new ProcessStartInfo();
-                app.FileName = App.pythonExePath;
-                app.Arguments = @"""" + App.pythonScriptPath + @"\optracker\face_tracking.py"" --mode "+mode+" --mov " + targetFile.MovPath + " -m " + targetFile.MeventPath + " --trk " + trkFolderPath + " -r " + targetFile.Rot.ToString() + " -o " + trkMovFilePath + " -p " + targetFile.People.ToString() + " -e " + targetFile.EventId.ToString() + " -s 0.4";
-                // コマンド実行
-                Process process = Process.Start(app);
-                process.WaitForExit();
-                process.Close();
+                    // 第1引数がコマンド、第2引数がコマンドの引数
+                    ProcessStartInfo app = new ProcessStartInfo();
+                    app.FileName = App.pythonExePath;
+                    app.Arguments = @"""" + App.pythonScriptPath + @"\optracker\face_tracking.py"" --mode " + mode + @" --mov """ + targetFile.MovPath + @""" -m """ + targetFile.MeventPath + @""" --trk """ + trkFolderPath + @""" -r " + targetFile.Rot.ToString() + @" -o """ + trkMovFilePath + @""" -p " + targetFile.People.ToString() + " -e " + targetFile.EventId.ToString() + " -s 0.4";
+                    // コマンド実行
+                    Process process = Process.Start(app);
+                    process.WaitForExit();
+                    process.Close();
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBoxResult result = MessageBox.Show("エラーが発生しました\n" + ex.Message.ToString(), App.ERROR_DIALOG_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -166,7 +171,7 @@ namespace PoseTracker
                     throw new Exception("アプリケーションのパスが不正です。");
                 }
                 app.FileName = exePath;
-                app.Arguments = selectedRow.MovPath;
+                app.Arguments = @"""" + selectedRow.MovPath + @"""";
                 Process process = Process.Start(app);
 
             }

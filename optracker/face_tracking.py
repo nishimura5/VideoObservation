@@ -17,37 +17,38 @@ from optracker import logger
 ## 顔ランドマークのトラッキングと頭部姿勢推定
 class FaceTracking:
     def __init__(self, src_mov_path, mevent_path, rot, number_people_max, dst_mov_path=None, dst_mov_resize=1.0):
-        logger.info('python:{} (cv2:{})(pandas:{})'.format(sys.version, cv2.__version__, pd.__version__))
-        logger.info('src_mov_path={} mevent_path={} rot={} number_people_max={} dst_mov_resize={}'.format(src_mov_path, mevent_path, rot, number_people_max, dst_mov_resize))
-        match = re.fullmatch('[ -~]+', src_mov_path)
-        if match is None:
-            logger.error('パスに無効な文字(全角文字等)が使用されています。')
-            raise Exception('パスに無効な文字(全角文字等)が使用されています。')
-
-        self.number_people_max = number_people_max
-        self.file_name = os.path.basename(src_mov_path).split('.')[0]
-        self.vcm = mevent.VideoCaptureMevent(src_mov_path, mevent_path, rot_ccw=rot)
-        width, height, self.fps = self.vcm.get_frame_size_and_fps()
-        logger.info('{}x{} fps={}'.format(width, height, self.fps))
-
-        self.out = None
         try:
+            logger.info('python:{} (cv2:{})(pandas:{})'.format(sys.version, cv2.__version__, pd.__version__))
+            logger.info('src_mov_path={} mevent_path={} rot={} number_people_max={} dst_mov_resize={}'.format(src_mov_path, mevent_path, rot, number_people_max, dst_mov_resize))
+            match = re.fullmatch('[ -~]+', src_mov_path)
+            if match is None:
+                logger.error('パスに無効な文字(全角文字等)が使用されています。')
+                raise Exception('パスに無効な文字(全角文字等)が使用されています。')
+
+            self.number_people_max = number_people_max
+            self.file_name = os.path.basename(src_mov_path).split('.')[0]
+            self.vcm = mevent.VideoCaptureMevent(src_mov_path, mevent_path, rot_ccw=rot)
+            width, height, self.fps = self.vcm.get_frame_size_and_fps()
+            logger.info('{}x{} fps={}'.format(width, height, self.fps))
+
+            self.out = None
             self.out_img_size = (int(width*dst_mov_resize), int(height*dst_mov_resize))
             logger.info('out_img_size={}'.format(self.out_img_size))
         except Exception as e:
-            logger.error(e)
-            raise
-        if dst_mov_path is not None:
-            fourcc = 'mp4v'
-            logger.info('fourcc={} out_img_size={}'.format(fourcc, self.out_img_size))
-            logger.info('dst_mov_path={}'.format(dst_mov_path))
-            os.makedirs(os.path.dirname(dst_mov_path), exist_ok=True)
-            try:
+            logger.error(self._traceback_parser(e))
+            raise Exception(e)
+
+        try:
+            if dst_mov_path is not None:
+                fourcc = 'mp4v'
+                logger.info('fourcc={} out_img_size={}'.format(fourcc, self.out_img_size))
+                logger.info('dst_mov_path={}'.format(dst_mov_path))
+                os.makedirs(os.path.dirname(dst_mov_path), exist_ok=True)
                 fourcc = cv2.VideoWriter_fourcc(*fourcc)
                 self.out = cv2.VideoWriter(dst_mov_path, fourcc, self.fps, self.out_img_size)
-            except Exception as e:
-                logger.error(e)
-                raise
+        except Exception as e:
+            logger.error(self._traceback_parser(e))
+            raise Exception(e)
         self.out_mov_resize = dst_mov_resize
 
         self.dtyp = {'frame':'int32', 'name':'object', 'code':'object', 'x':'Int64', 'y':'Int64'}
@@ -104,7 +105,7 @@ class FaceTracking:
             body_df = opdf.get_body_trk()
             body_df.to_csv(dst_body_trk_path)
         except Exception as e:
-            logger.error(e)
+            logger.error(self._traceback_parser(e))
         cv2.destroyAllWindows()
         print('trk_end')
         logger.debug('--')
@@ -214,6 +215,10 @@ class FaceTracking:
         mozaik_img = cv2.resize(resize_img, (rect_img.shape[1], rect_img.shape[0]), interpolation = cv2.INTER_NEAREST)
         src_img[top-offset:bottom+offset, left-offset:right+offset, :] = mozaik_img
         return src_img
+
+    def _traceback_parser(self, e):
+        line = traceback.format_tb(e.__traceback__)[0].split(', ')[1]
+        return '{},{}'.format(line, e)
 
 if __name__ == "__main__":
     try:
