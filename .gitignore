@@ -1,5 +1,5 @@
-trkproc/face/*
-trkproc/pose/*
+optracker/models/face/*
+optracker/models/pose/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

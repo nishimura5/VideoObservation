@@ -231,10 +231,10 @@ if __name__ == "__main__":
 
         mov_path = args.mov
         if not os.path.exists(mov_path):
-            print('mov not found % s' % mov_path)
+            logger.warning('mov not found {}'.format(mov_path))
         mevent_path = args.mevent
         if not os.path.exists(mevent_path):
-            print('mevent not found % s' % mevent_path)
+            logger.warning('mevent not found {}'.format(mevent_path))
 
         dst_mov_path = args.dst_mov_path
 
