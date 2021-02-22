@@ -1,8 +1,8 @@
-# VideoObservation
+# BehavioralObservation
 動画を用いた観察を支援するツールです。
 
 ## 各ツールの概要
-VideoObservationは下記3つのアプリケーションによって構成されています。
+BehavioralObservationは下記3つのアプリケーションによって構成されています。
 ### MeventEditor.exe
 MeventEditor.exeは動画内の観察したいイベントを手入力で指定し、保存するためのアプリケーションです。
 
@@ -30,15 +30,15 @@ PoseTracker.exeは、オープンソースの姿勢推定ライブラリ[OpenPos
 - Python 3.8
   - OpenCV 4.5
   - Pandas 1.2
-  - Matplotlib 3.3 (TrkPlotter.exeでのみ使用)
-  - Scipy 1.6 (TrkPlotter.exeでのみ使用)
-  - Scikit-learn 0.24 (TrkPlotter.exeで使用予定)
+  - Matplotlib 3.3
+  - Scipy 1.6
+  - Scikit-learn 0.24
   
 ## ファイルフォーマット
-VideoObservationが扱うファイルフォーマットは次のとおりです。各ファイルを直接テキストエディタで編集する場合は、フォーマットに注意してください。
+BehavioralObservationが扱うファイルフォーマットは次のとおりです。各ファイルを直接テキストエディタで編集する場合は、フォーマットに注意してください。
 
 ### ファイルのフォルダ構成
-VideoObservationは上記の動画ファイル、[イベントファイル](#イベントファイルmevent)、[トラックファイル](#トラックファイルtrk)が、次のフォルダ構成で格納されていることを前提としています。
+BehavioralObservationは上記の動画ファイル、[イベントファイル](#イベントファイルmevent)、[トラックファイル](#トラックファイルtrk)が、次のフォルダ構成で格納されていることを前提としています。
 
 ```bash
 任意のフォルダ
@@ -47,21 +47,24 @@ VideoObservationは上記の動画ファイル、[イベントファイル](#イ
 │  ├─...
 │  └─zzzz.mp4
 ├─mevent
-│  ├─aaaa.mevent
+│  ├─aaaa.mevent    //MeventEditor.exeによって出力される
 │  ├─...
 │  └─zzzz.mevent
-└─trk
-   ├─aaaa.trk
-   ├─aaaa_body.trk
-   ├─...
-   └─zzzz_body.trk
+├─trk
+│  ├─aaaa.trk       //PoseTracker.exeによって出力される
+│  ├─aaaa_body.trk
+│  ├─...
+│  └─zzzz_body.trk
+└─graph
+   ├─aaaa.png       // TrkPlotter.exeによって出力される
+   └─aaaa.csv
 ```
 
 ### 動画ファイル(.mp4, .mov, .avi)
 OpenCVがサポートする動画ファイルに対応しています。
 
 ### イベントファイル(.mevent)
-VideoObservation独自のファイルフォーマットです。イベントファイルはMeventEditor.exeで作成編集します。イベントファイルは動画と対になっており、動画と同じファイル名が付けられます。
+BehavioralObservation独自のファイルフォーマットです。イベントファイルはMeventEditor.exeで作成編集します。イベントファイルは動画と対になっており、動画と同じファイル名が付けられます。
 イベントファイルはCSV形式で、下記のフィールドを有します。1行目はコメント行で、動画のfpsが記録されています。
 
 ||time|frame|mevent_id|comment|
@@ -76,7 +79,7 @@ VideoObservation独自のファイルフォーマットです。イベントフ�
 イベントファイルはPoseTracker.exeにおいて、解析対象の時刻範囲を指定する際に使用されます。
 
 ### トラックファイル(.trk)
-VideoObservation独自のファイルフォーマットです。トラックファイルはPoseTracker.exeで生成します。
+BehavioralObservation独自のファイルフォーマットです。トラックファイルはPoseTracker.exeで生成します。
 トラックファイルは第1フィールドと第2フィールドがマルチインデックスのCSV形式で、下記のフィールドを有します。
 トラックファイルは動画と対になっており、動画と同じファイル名が付けられますが、適宜suffixが加えられます。
 
@@ -95,4 +98,4 @@ VideoObservation独自のファイルフォーマットです。トラックフ�
 ![Keypoints of OpenPose](/optracker/img/keypoints.png)
 
 ### ログファイル(.log)
-PoseTracker.exeはログファイル(optracker.log)をC:\ProgramData\BehavioralObservationに出力します。不具合が発生したときはログファイルから原因調査を試みてください。
+BehavioralObservationはログファイル(optracker.log)をC:\ProgramData\BehavioralObservationに出力します。不具合が発生したときはログファイルから原因調査を試みてください。
