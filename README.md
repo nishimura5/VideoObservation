@@ -2,17 +2,20 @@
 動画を用いた観察を支援するツールです。
 
 ## 各ツールの概要
-VideoObservationは下記3つのツールによって構成されています。
+VideoObservationは下記3つのアプリケーションによって構成されています。
 ### MeventEditor.exe
-MeventEditor.exeは動画内の観察したいイベントを手入力で指定し、保存するためのアプリケーションです。「開く」ボタンから動画を選択すると、動画を[所定のフォルダ](#ファイルのフォルダ構成)に移動し、[イベントファイル](#イベントファイルmevent)を生成します。動画時刻ボタンをクリックすることで画面下部のリストにその時刻がイベントとして追加されます。画面下部のリストに追加されたイベントをクリックすると当該シーンにジャンプします。動画を右クリックすると1秒戻り、左クリックすると1秒進みます。イベントファイルはアプリケーションを終了したとき、または「開く」ボタンをクリックしたときに保存されます。
+MeventEditor.exeは動画内の観察したいイベントを手入力で指定し、保存するためのアプリケーションです。
+
+「開く」ボタンから動画を選択すると、動画を[所定のフォルダ](#ファイルのフォルダ構成)に移動し、[イベントファイル](#イベントファイルmevent)を生成します。動画時刻ボタンをクリックすることで画面下部のリストにその時刻がイベントとして追加されます。画面下部のリストに追加されたイベントをクリックすると当該シーンにジャンプします。動画を右クリックすると1秒戻り、左クリックすると1秒進みます。イベントファイルはアプリケーションを終了したとき、または「開く」ボタンをクリックしたときに保存されます。
 <p align="center">
   <img src="https://user-images.githubusercontent.com/49755007/108160152-e259cb00-712b-11eb-8f64-98a5d811b043.png" width="500">
 </p>
 MeventEditor.exeの初回起動時にはPython(Miniconda)と依存ライブラリ(OpenCV等)のインストールが開始されます。または、MeventEditor.exe.configのkey=pythonPathに当該パスを記述することで既存のPythonを使用することも可能です。
 
 ### PoseTracker.exe
-観察の内容によっては、姿勢推定ライブラリによる自動化が期待できます。しかしながら無料で使用できてかつ直感的に扱えるツールは多くありません。
-PoseTracker.exeは、オープンソースの姿勢推定ライブラリ[OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)を使用して動画内の人物姿勢/表情推定を実行し、その結果を[トラックファイル](#トラックファイル)と動画ファイルに記録するためのツールです。
+PoseTracker.exeは、オープンソースの姿勢推定ライブラリ[OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)を使用して動画内の人物姿勢/表情推定を実行し、その結果を[トラックファイル](#トラックファイルtrk)と動画ファイルに記録するためのアプリケーションです。
+
+「動画追加」ボタンから分析したい動画を選択してリストに追加します。OpenPoseによるキーポイント検出を実行したいイベントと動画内の人物の数を設定し、「OpenPoseを実行」ボタンをクリックすると計算が開始されます。
 <p align="center">
   <img src="https://user-images.githubusercontent.com/49755007/108652037-7a79fa80-7506-11eb-9d76-b53367db9d6e.png" width="600">
 </p>
@@ -92,4 +95,4 @@ VideoObservation独自のファイルフォーマットです。トラックフ�
 ![Keypoints of OpenPose](/optracker/img/keypoints.png)
 
 ### ログファイル(.log)
-PoseTracker.exeはログファイル(optracker.log)を出力します。不具合が発生したときはログファイルから原因調査を試みてください。
+PoseTracker.exeはログファイル(optracker.log)をC:\ProgramData\BehavioralObservationに出力します。不具合が発生したときはログファイルから原因調査を試みてください。
