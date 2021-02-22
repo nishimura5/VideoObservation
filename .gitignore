@@ -1,3 +1,5 @@
+trkproc/face/*
+trkproc/pose/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -486,3 +488,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
