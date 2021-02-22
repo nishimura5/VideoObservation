@@ -1,0 +1,80 @@
+﻿<mah:MetroWindow x:Class="TrkPlotter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:TrkPlotter"
+        mc:Ignorable="d"
+        Title="TrkPlotter" mah:TitleCharacterCasing="Normal" Height="300" Width="840">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="LightGray" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1.8*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="ファイル">
+                    <MenuItem Header="開く" Click="SelectAndOpenTrkButton_Click"/>
+                    <MenuItem x:Name="openDestFolder" Header="出力先フォルダを開く" Click="OpenDestFolder_Click" IsEnabled="False"/>
+                </MenuItem>
+                <MenuItem Header="ヘルプ">
+                    <MenuItem Header="TrkPlotterについて" Click="About_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <StackPanel Grid.Row="1" x:Name="fileSelectRow" VerticalAlignment="Center">
+            <DockPanel>
+                <Label Content="トラックファイル" Width="90" Margin="5"/>
+                <TextBlock x:Name="trkFilePath" Width="590" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Button Content="開く" Width="70" Margin="5" Click="SelectAndOpenTrkButton_Click"/>
+            </DockPanel>
+            <DockPanel d:IsHidden="True">
+                <Label Content="イベントファイル" Width="90" Margin="5"/>
+                <TextBlock x:Name="meventFilePath" MinWidth="590" Margin="5" VerticalAlignment="Center" HorizontalAlignment="left"/>
+
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="2" x:Name="loadTrkRow" VerticalAlignment="Center">
+            <DockPanel>
+                <Label Content="移動平均(フレーム)" Width="Auto" Margin="5,0,0,0"/>
+                <TextBox x:Name="averageFrame" Width="60" VerticalContentAlignment="Center"/>
+                <Button x:Name="loadBtn" Content="トラックファイル読込" Width="110" Margin="5,0,0,0" Click="LoadTrkButton_Click" IsEnabled="False"/>
+                <Label Content="イベントID" Width="Auto" Margin="20,0,0,0"/>
+                <ComboBox x:Name="eventID" Width="40" SelectedIndex="0" VerticalAlignment="Center" Grid.Column="0" />
+                <Button x:Name="meventEditBtn" Content="イベント編集" Width="80" Margin="5,0,5,0" Click="EditButton_Click" HorizontalAlignment="Left" IsEnabled="False"/>
+                <Label Content="計算項目ファイル" Width="100" Margin="20,0,0,0"/>
+                <ComboBox x:Name="calclistCombo" Margin="0,0,5,0"  ItemsSource="{Binding CalclistDict}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="3" x:Name="setParamRow" VerticalAlignment="Center">
+            <DockPanel>
+                <Label Content="横軸間隔[s]" Width="Auto" Margin="5,0,0,0"/>
+                <TextBox x:Name="xInterval" Width="60" VerticalContentAlignment="Center"/>
+                <Label Content="グラフ寸法[mm]" Width="Auto" Margin="20,0,0,0"/>
+                <TextBox x:Name="graphWidth" Width="50" VerticalContentAlignment="Center"/>
+                <Label Content="×" Width="Auto"/>
+                <TextBox x:Name="graphHeight" Width="50" VerticalContentAlignment="Center"/>
+                <Label Content="グラフ縦軸範囲" Width="Auto" Margin="20,0,0,0"/>
+                <TextBox x:Name="yMin" Width="50" VerticalContentAlignment="Center"/>
+                <Label Content="～" Width="Auto"/>
+                <TextBox x:Name="yMax" Width="50" VerticalContentAlignment="Center"/>
+                <Button x:Name="pngSaveBtn" Content="グラフ出力" Width="90" Margin="20,0,0,0" HorizontalAlignment="Left" Click="SaveGraphButton_Click" IsEnabled="False"/>
+                <Button x:Name="csvSaveBtn" Content="CSV出力" Width="90" Margin="20,0,0,0" HorizontalAlignment="Left" Click="SaveCsvButton_Click" IsEnabled="False"/>
+            </DockPanel>
+        </StackPanel>
+        <StackPanel x:Name="progressRing" Visibility="Collapsed" VerticalAlignment="Center" Grid.RowSpan="3">
+            <mah:ProgressRing IsActive="True" VerticalAlignment="Center"/>
+            <Label Content="処理中" HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</mah:MetroWindow>

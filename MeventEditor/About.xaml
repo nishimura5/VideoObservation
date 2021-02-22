@@ -1,0 +1,38 @@
+﻿<Window x:Class="MeventEditor.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MeventEditor"
+        mc:Ignorable="d"
+        Title="" Height="220" Width="550">
+    <Grid Background="#444446">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <StackPanel Margin="25"  VerticalAlignment="Center">
+                <Image Name="IconImage" Stretch="UniformToFill" />
+            </StackPanel>
+        </DockPanel>
+        <DockPanel Grid.Column="1">
+            <StackPanel Orientation="Vertical" Margin="10" VerticalAlignment="Center">
+                <TextBlock x:Name="Version" FontSize="21" Foreground="White" FontWeight="Bold" />
+                <TextBlock  Foreground="White">
+                    <Run Text="https://github.com/nishimura5/VideoObservation" />
+                        <LineBreak/>
+                    <Run Text="九州大学大学院芸術工学研究院 尾方研究室" />
+                </TextBlock>
+
+                <TextBlock FontSize="8" Margin="0,10,0,0"  Foreground="White">
+                    <Run Text="本アプリケーションの著作権について"/>
+                    <LineBreak/>
+                    <Run Text="Application © 2021 Nishimura Eigo"/>
+                    <LineBreak/>
+                    <Run Text="Icon Graphic © 2021 Jiang Yujian"/>
+                </TextBlock>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

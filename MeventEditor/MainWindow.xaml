@@ -1,0 +1,103 @@
+﻿<mah:MetroWindow  x:Class="MeventEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:MeventEditor"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        Title="MeventEditor" mah:TitleCharacterCasing="Normal" Height="800" Width="700">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="LightGray" />
+            <Setter Property="MinHeight" Value="26" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="90" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="ファイル">
+                    <MenuItem Header="開く" Click="SelectAndOpenMovieButton_Click"/>
+                </MenuItem>
+                <MenuItem Header="ヘルプ">
+                    <MenuItem Header="MeventEditorについて" Click="About_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <StackPanel Grid.Row="1" Margin="5" VerticalAlignment="Center">
+            <DockPanel>
+                <Label Content="動画ファイル" Width="80" Margin="5"/>
+                <TextBlock x:Name="movieFilePath" Width="Auto" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Button Content="開く" Width="70" Margin="5" Click="SelectAndOpenMovieButton_Click" HorizontalAlignment="Right"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="イベントファイル" Width="80" Margin="5"/>
+                <TextBlock x:Name="meventFilePath" Width="Auto" Margin="5" VerticalAlignment="Center" HorizontalAlignment="left"/>
+                <DockPanel HorizontalAlignment="Right">
+                    <Label Content="|" Margin="5"/>
+                    <Label x:Name="FpsLabel" Margin="0,5,0,0"/>
+                    <Label Content="fps" Margin="0,5,5,0"/>
+                </DockPanel>
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Margin="5" VerticalAlignment="Center">
+            <DockPanel>
+                <MediaElement x:Name="movieWindowMediaElement" HorizontalAlignment="Center" VerticalAlignment="Top" MinHeight="300" Stretch="Uniform"  Source="" UnloadedBehavior="Manual" LoadedBehavior="Manual" ScrubbingEnabled="True" MediaOpened="MovieOpened" MouseLeftButtonUp="Movie_MouseUp" MouseRightButtonUp="Movie_MouseRightUp"/>
+            </DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Name="playPauseButton" Width="40" HorizontalContentAlignment="Center" Click="PlayPauseButton_Click" Margin="5"/>
+                <Slider Name="progressSlider" Grid.Column="1" Minimum="0" Maximum="100" Margin="0,5,0,5" HorizontalAlignment="Stretch" Height="16" ValueChanged="Progress_ValueChanged" Style="{DynamicResource MahApps.Styles.Slider.Flat}"/>
+                <Button Grid.Column="2" Name="progressButton" Width="90" Content="" Margin="5" Click="ProgressButton_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"/>
+            </Grid>
+        </StackPanel>
+
+        <DockPanel Grid.Row="3" Margin="5">
+                <DataGrid Name="meventDataGrid" 
+                      ItemsSource="{Binding MeventDatas}" 
+                      SelectedItem="" 
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                                        <Border BorderThickness="0" Background="#83919f">
+                                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Header="時刻" Binding="{Binding Time}" Width="90"/>
+                        <DataGridComboBoxColumn Header="ID" x:Name="eventIdCombobox" SelectedItemBinding="{Binding EventId, Mode=TwoWay}" Width="60" />
+                        <DataGridTextColumn Header="コメント" Binding="{Binding Comment}" Width="*"/>
+                    </DataGrid.Columns>
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <EventSetter Event="MouseLeftButtonUp" Handler="ListViewItem_Click"/>
+                            <EventSetter Event="MouseRightButtonUp" Handler="Remove_Click"/>
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+        </DockPanel>
+    </Grid>
+</mah:MetroWindow>

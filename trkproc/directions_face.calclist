@@ -1,0 +1,5 @@
+;comment=頭部方向
+pointA,pointB,func,legend,color
+roll,,*1,頭部(Roll),#904f4f
+pitch,,*1,頭部(Pitch),#4f904f
+yaw,,*1,頭部(Yaw),#4f4f90

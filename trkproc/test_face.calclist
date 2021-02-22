@@ -1,0 +1,8 @@
+;comment=試験用
+pointA,pointB,func,legend,color
+pitch,,*1,頭部(Pitch),#4f4fa0
+30,x,*0.5,30のx,#afafaa
+62,66,*2,口縦,#f4a460
+30,30,*1,30の移動量,#2fafaa
+30,30,p95,30の移動量(95%ile),#2fafaa
+pitch,,r-45~45,頭部(Pitch)正規化,#3f2090

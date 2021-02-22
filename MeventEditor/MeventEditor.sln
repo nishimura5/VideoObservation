@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeventEditor", "MeventEditor.csproj", "{12318CC2-A72E-4654-B3EA-3EEE5BB2D29E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12318CC2-A72E-4654-B3EA-3EEE5BB2D29E}.Debug|x64.ActiveCfg = Debug|x64
+		{12318CC2-A72E-4654-B3EA-3EEE5BB2D29E}.Debug|x64.Build.0 = Debug|x64
+		{12318CC2-A72E-4654-B3EA-3EEE5BB2D29E}.Release|x64.ActiveCfg = Release|x64
+		{12318CC2-A72E-4654-B3EA-3EEE5BB2D29E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {562F0B8B-15DC-4F05-B557-DB7CA1CE7142}
+	EndGlobalSection
+EndGlobal
