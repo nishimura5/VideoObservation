@@ -21,7 +21,12 @@ PoseTracker.exeは、オープンソースの姿勢推定ライブラリ[OpenPos
 </p>
 
 ### TrkPlotter.exe
-姿勢推定によって得られた座標情報はデータ数が多く、Excelによる解析が現実的でない場合があります。TrkPlotter.exeは、PoseTracker.exeによって得られた姿勢データを使用して任意の[キーポイント](#OpenPoseのキーポイント)間の距離をグラフ描画するためのツールです。
+TrkPlotter.exeは、PoseTracker.exeで得られた[キーポイント](#OpenPoseのキーポイント)間の距離等を計算し、グラフ描画するためのアプリケーションです。
+
+グラフ描画対象のトラックファイルとイベントID、分析したい項目に応じた[計算項目ファイル](#計算項目ファイルcalclist)を設定し、「グラフ出力」ボタンをクリックすると描画が開始されます。
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/49755007/108825631-9e246a00-7606-11eb-9806-e492795cf3fe.png" width="500">
+</p>
 
 ## 動作環境
 - Windows10(x64)
@@ -33,7 +38,10 @@ PoseTracker.exeは、オープンソースの姿勢推定ライブラリ[OpenPos
   - Matplotlib 3.3
   - Scipy 1.6
   - Scikit-learn 0.24
-  
+
+### 注意事項
+BehavioralObservationはC#からPythonを実行する技術「[pythonnet](https://github.com/pythonnet/pythonnet)」を使用しており、MeventEditor.exeの初回起動時にPython環境(miniconda)をインストールする仕様となっています。
+
 ## ファイルフォーマット
 BehavioralObservationが扱うファイルフォーマットは次のとおりです。各ファイルを直接テキストエディタで編集する場合は、フォーマットに注意してください。
 
@@ -96,6 +104,16 @@ BehavioralObservation独自のファイルフォーマットです。トラッ�
 
 #### OpenPoseのキーポイント
 ![Keypoints of OpenPose](/optracker/img/keypoints.png)
+
+### 計算項目ファイル(.calclist)
+TrkPlotter.exeで点間距離等を計算するための設定ファイルフォーマットです。計算項目ファイルは開発者あるいはユーザーによって手入力で作成します。
+計算項目ファイルはCSV形式で、下記のフィールドを有します。1行目はコメント行で、アプリケーションの選択メニューに表示される項目を記述します。
+ファイル名には「_body」または「_face」というsuffixを記述します。
+
+||pointA|pointB|func|legend|color|
+|:---|:---|:---|:---|:---|:---|
+|名称|対象点A|対象点B|計算オプション|凡例|色|
+|形式|str|str|str|str|str|
 
 ### ログファイル(.log)
 BehavioralObservationはログファイル(optracker.log)をC:\ProgramData\BehavioralObservationに出力します。不具合が発生したときはログファイルから原因調査を試みてください。
