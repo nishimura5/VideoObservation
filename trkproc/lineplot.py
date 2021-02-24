@@ -99,9 +99,9 @@ class LinePlot:
                 rounder = lambda x: Decimal(str(x)).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
                 x_ticks = np.arange(0, self.time_arr.size+1, self.fps*tick_interval_sec)
                 x_ticks = np.fromiter(map(rounder, x_ticks), dtype=np.int)
-                logger.debug('{}'.format(x_ticks))
-                for n in x_ticks:
-                    logger.debug('{}'.format(self.time_arr[n]))
+#                logger.debug('{}'.format(x_ticks))
+#                for n in x_ticks:
+#                    logger.debug('{}'.format(self.time_arr[n]))
 
                 ax.set_xticks(x_ticks)
                 ax.xaxis.set_major_formatter(FuncFormatter(lambda x, pos: "{}".format(self.time_arr[x][3:8])))

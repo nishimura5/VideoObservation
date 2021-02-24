@@ -275,7 +275,7 @@ namespace TrkPlotter
             string exePath = ConfigurationManager.AppSettings.Get("meventEditorPath");
             ProcessStartInfo app = new ProcessStartInfo();
             app.FileName = exePath;
-            app.Arguments = meventFilePath.Text;
+            app.Arguments = @"""" + meventFilePath.Text + @"""";
             Process process = Process.Start(app);
         }
 
