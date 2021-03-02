@@ -81,10 +81,16 @@ namespace PoseTracker
                 // *-------------------------------------------------------*
 
                 // python環境にパスを通す、規定値でpython.exeが見つからなかったらApp.configの値を参照
-                var PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "miniconda38");
+                var PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "miniconda38_64");
                 if (File.Exists(Path.Combine(PYTHON_HOME, "python.exe")) == false)
                 {
                     PYTHON_HOME = ConfigurationManager.AppSettings.Get("pythonPath");
+                }
+                // ついにpython環境が見つからなかったらMinicondaインストール
+                if (File.Exists(Path.Combine(PYTHON_HOME, "python.exe")) == false)
+                {
+                    PythonInstall.ExecuteInstall();
+                    PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "miniconda38_64");
                 }
 
                 // pythonnetが、python本体のDLLおよび依存DLLを見つけられるようにする
