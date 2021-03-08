@@ -9,6 +9,7 @@ using System.Windows;
 using Python.Runtime;
 using System.IO;
 using ControlzEx.Theming;
+using System.Diagnostics;
 
 namespace PoseTracker
 {
@@ -89,7 +90,14 @@ namespace PoseTracker
                 // ついにpython環境が見つからなかったらMinicondaインストール
                 if (File.Exists(Path.Combine(PYTHON_HOME, "python.exe")) == false)
                 {
-                    PythonInstall.ExecuteInstall();
+                    string installBatPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MinicondaInstaller.exe");
+                    // 第1引数がコマンド、第2引数がコマンドの引数
+                    ProcessStartInfo app = new ProcessStartInfo();
+                    app.FileName = installBatPath;
+                    // コマンド実行
+                    Process process = Process.Start(app);
+                    process.WaitForExit();
+                    process.Close();
                     PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "miniconda38_64");
                 }
 

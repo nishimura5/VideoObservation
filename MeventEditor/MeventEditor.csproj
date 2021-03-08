@@ -149,7 +149,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>rd /s /q "$(ProjectDir)..\mevent\__pycache__"
-xcopy "$(ProjectDir)..\miniconda_install.bat" $(TargetDir) /Y</PreBuildEvent>
+    <PreBuildEvent>rd /s /q "$(ProjectDir)..\mevent\__pycache__"</PreBuildEvent>
   </PropertyGroup>
 </Project>

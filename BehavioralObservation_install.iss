@@ -44,6 +44,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "MeventEditor\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "PoseTracker\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "TrkPlotter\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "MinicondaInstaller\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "mevent\*"; DestDir: "{app}\mevent"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "optracker\*"; DestDir: "{app}\optracker"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "trkproc\*"; DestDir: "{app}\trkproc"; Flags: ignoreversion recursesubdirs createallsubdirs
