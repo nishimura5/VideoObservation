@@ -133,6 +133,11 @@
   <ItemGroup>
     <Resource Include="PoseTracker.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Images\splash.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </SplashScreen>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>rd /s /q "$(ProjectDir)..\optracker\__pycache__"

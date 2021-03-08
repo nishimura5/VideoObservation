@@ -164,6 +164,11 @@
   <ItemGroup>
     <Resource Include="TrkProtter.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Images\splash.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </SplashScreen>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>rd /s /q "$(ProjectDir)..\mevent\__pycache__"
