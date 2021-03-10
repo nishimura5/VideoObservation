@@ -10,7 +10,7 @@ MeventEditor.exeは動画内の観察したいイベントを手入力で指定�
 <p align="center">
   <img src="https://user-images.githubusercontent.com/49755007/108160152-e259cb00-712b-11eb-8f64-98a5d811b043.png" width="500">
 </p>
-MeventEditor.exeの初回起動時にはPython(Miniconda)と依存ライブラリ(OpenCV等)のインストールが開始されます。または、MeventEditor.exe.configのkey=pythonPathに当該パスを記述することで既存のPythonを使用することも可能です。
+
 
 ### PoseTracker.exe
 PoseTracker.exeは、オープンソースの姿勢推定ライブラリ[OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose)を使用して動画内の人物姿勢/表情推定を実行し、その結果を[トラックファイル](#トラックファイルtrk)と動画ファイルに記録するためのアプリケーションです。
@@ -28,7 +28,9 @@ TrkPlotter.exeは、PoseTracker.exeで得られた[キーポイント](#OpenPose
   <img src="https://user-images.githubusercontent.com/49755007/108825631-9e246a00-7606-11eb-9806-e492795cf3fe.png" width="500">
 </p>
 
-## 動作環境
+## 導入
+
+### 動作環境
 - Windows10(x64)
 - cuda 10.0 (PoseTracker.exeでのみ使用)
 - cudnn 7 (PoseTracker.exeでのみ使用)
@@ -39,8 +41,15 @@ TrkPlotter.exeは、PoseTracker.exeで得られた[キーポイント](#OpenPose
   - Scipy 1.6
   - Scikit-learn 0.24
 
-### 注意事項
+### インストール
+以下を参考にして下さい。
+<p align="center">
+  <a href="http://www.youtube.com/watch?v=XOiwKO82Op4"> <img src="http://img.youtube.com/vi/XOiwKO82Op4/0.jpg" width="500"> </a>
+</p>
+
 BehavioralObservationはC#からPythonを実行する技術「[pythonnet](https://github.com/pythonnet/pythonnet)」を使用しており、MeventEditor.exeの初回起動時にPython環境(miniconda)をインストールする仕様となっています。
+
+または、MeventEditor.exe.configのkey=pythonPathにpython.exeのパスを記述することで、既存のPython環境を使用することも可能です。
 
 ## ファイルフォーマット
 BehavioralObservationが扱うファイルフォーマットは次のとおりです。各ファイルを直接テキストエディタで編集する場合は、フォーマットに注意してください。
