@@ -38,6 +38,7 @@ namespace MinicondaInstaller
             Process process = Process.Start(app);
             process.WaitForExit();
             process.Close();
+            this.Close();
         }
     }
 }
