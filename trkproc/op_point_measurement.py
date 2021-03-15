@@ -135,6 +135,7 @@ class OpPointMeasurement(point_measurement.PointMeasurement):
                     new_col_name = '{}_{}ile'.format(col_name, row.func[1:])
                     tar_df = self._normalize_quantile(tar_df, tile, 0.0).rename(columns={col_name:new_col_name})
                     col_name = new_col_name
+                ## 先頭が'r' = レンジ
                 elif row.func[0] == 'r':
                     range_code = row.func[1:].split('~')
                     if len(range_code) != 2:
@@ -150,21 +151,46 @@ class OpPointMeasurement(point_measurement.PointMeasurement):
 
                 df_list.append({'legend':row.legend, 'df':tar_df, 'color':row.color, 'points':col_name})
 
-#            con_df = pd.DataFrame()
-#            con_df['con'] = (df_list[0]['df']['62-66'] + df_list[1]['df']['pitch'] + df_list[2]['df']['diff']) / (-3) + 1.0
-#            com_df = pd.DataFrame()
-#            com_df['com'] = (df_list[0]['df']['62-66'] + df_list[1]['df']['pitch']) / (2)
-##            con_df['con'] = mouth_df[0]
-#            con_df['con'] = con_df['con'].where(con_df['con'] < 1, 2)
-#            con_df['con'] = con_df['con'].where((con_df['con'] > 1)|(con_df['con'] < 0), 1)
-#            con_df['con'] = con_df['con'].where(con_df['con'] > 0, 0)
-#
-#            df_list.append({'legend':'集中指数', 'df':con_df, 'color':'red', 'points':'con'})
-#            df_list.append({'legend':'コミュニケーション指数', 'df':com_df, 'color':'green', 'points':'com'})
-#
-#            df_list.pop(0)
-#            df_list.pop(0)
-#            df_list.pop(0)
+            file_name = calclist_path.split('\\')[-1]
+
+            logger.debug('file_name={}'.format(file_name))
+            if file_name == "concom_face.calclist":
+                logger.debug(df_list[0])
+                logger.debug(df_list[1])
+                logger.debug(df_list[2])
+                con_df = pd.DataFrame()
+                con_df['con'] = (df_list[0]['df']['62-66_95ile'] + df_list[2]['df']['pitch_-45~45'] + df_list[1]['df']['30_diff_95ile']) / (-3) + 1.0
+                com_df = pd.DataFrame()
+                com_df['com'] = (df_list[0]['df']['62-66_95ile'] + df_list[2]['df']['pitch_-45~45']) / (2)
+#                con_df['con'] = con_df['con'].where(con_df['con'] < 1, 2)
+#                con_df['con'] = con_df['con'].where((con_df['con'] > 1)|(con_df['con'] < 0), 1)
+#                con_df['con'] = con_df['con'].where(con_df['con'] > 0, 0)
+
+                df_list.append({'legend':'集中指数', 'df':con_df, 'color':'red', 'points':'con'})
+                df_list.append({'legend':'コミュニケーション指数', 'df':com_df, 'color':'green', 'points':'com'})
+
+                df_list.pop(0)
+                df_list.pop(0)
+                df_list.pop(0)
+
+            if file_name == "mayoi_body.calclist":
+                con_df = pd.DataFrame()
+                con_df['con'] = (df_list[0]['df']['10_diff_95ile'] + df_list[1]['df']['13_diff_95ile']) / (-2) + 1.0
+                df_list.append({'legend':'迷い指数', 'df':con_df, 'color':'red', 'points':'con'})
+
+                df_list.pop(0)
+                df_list.pop(0)
+
+            if file_name == "eye_test_face.calclist":
+                con_df = pd.DataFrame()
+                con_df['eye'] = (df_list[0]['df']['38-40_95ile'] + df_list[1]['df']['43-47_95ile']) / (2)
+                com_df = pd.DataFrame()
+                com_df['pitch2'] = df_list[2]['df']['pitch_-45~45'] * (-1) + 1.0
+                df_list.append({'legend':'目の開度', 'df':con_df, 'color':'red', 'points':'eye'})
+                df_list.append({'legend':'顔の向き', 'df':com_df, 'color':'green', 'points':'pitch2'})
+                df_list.pop(0)
+                df_list.pop(0)
+                df_list.pop(0)
 
         except Exception as e:
             logger.error(self._traceback_parser(e))
