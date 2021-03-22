@@ -16,6 +16,8 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System.IO;
 using System.Diagnostics;
 using System.Configuration;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace PoseTracker
 {
@@ -24,12 +26,49 @@ namespace PoseTracker
     /// </summary>
     public partial class MainWindow
     {
-        private TargetFiles targetFiles = new TargetFiles();
+        #region Binding
+        internal class Bind : INotifyPropertyChanged
+        {
+            #region INotifyPropertyChanged
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected virtual void OnPropertyChanged(string propertyName)
+            {
+                PropertyChangedEventHandler handler = this.PropertyChanged;
+                if (handler != null)
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+            #endregion
+
+            internal Bind() { }
+
+            private ObservableCollection<TarFile> _TarFileProps;
+            public ObservableCollection<TarFile> TarFileProps
+            {
+                get { return _TarFileProps; }
+                set { _TarFileProps = value; OnPropertyChanged("TarFileProps"); }
+            }
+        }
+        internal Bind _Bind;
+        #endregion
+
+        public List<int> rotList { get; set; }
+        public List<int> peopleList { get; set; }
+        public List<int> eventIdList { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this.targetFiles;
+
+            rotList = new List<int>() {0, 90, 270};
+            rotCombobox.ItemsSource = rotList;
+            peopleList = new List<int>() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+            peopleNumCombobox.ItemsSource = peopleList;
+            eventIdList = new List<int>() {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+            eventIdCombobox.ItemsSource = eventIdList;
+
+            _Bind = new Bind();
+            this.DataContext = _Bind;
+            _Bind.TarFileProps = new ObservableCollection<TarFile>();
         }
 
         private void SelectAndOpenMovieButton_Click(object sender, RoutedEventArgs e)
@@ -52,10 +91,8 @@ namespace PoseTracker
             string meventFileName = Path.GetFileNameWithoutExtension(movieFilePath);
             string meventFilePath = Path.Combine(orgFolderPathStr, "mevent", meventFileName + ".mevent");
 
-            targetFiles.Add(movieFilePath, meventFilePath, ParseCombo(EditRot.Text, 0), ParseCombo(EditPeople.Text, 1), ParseCombo(EditEventId.Text, 0));
-            int lastIdx = lstEntry.Items.Count - 1;
-
-            lstEntry.SelectedIndex = lastIdx;
+            TarFile tarFile = new TarFile(movieFilePath, meventFilePath, 0, 1, 0);
+            _Bind.TarFileProps.Add(tarFile);
         }
 
         private int ParseCombo(string tarString, int defaultValue)
@@ -68,38 +105,43 @@ namespace PoseTracker
             return res;
         }
 
-        private void ListViewItem_Click(object sender, RoutedEventArgs e)
+        private void Remove_Click(object sender, MouseButtonEventArgs e)
         {
-            TargetFile selectedRow = (TargetFile)this.lstEntry.SelectedItem;
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+            while ((dep != null) && !(dep is DataGridCell))
+            {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+            if (dep == null) return;
+
+            if (dep is DataGridCell)
+            {
+                DataGridCell cell = dep as DataGridCell;
+                cell.Focus();
+                while ((dep != null) && !(dep is DataGridRow))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+                }
+                DataGridRow row = dep as DataGridRow;
+                tarFileDataGrid.SelectedItem = row.DataContext;
+            }
+
+            int idx = tarFileDataGrid.SelectedIndex;
+            if (idx >= _Bind.TarFileProps.Count)
+            {
+                return;
+            }
+            _Bind.TarFileProps.RemoveAt(idx);
         }
 
-        private void Remove_Click(object sender, RoutedEventArgs e)
+        private void ListViewItem_Click(object sender, MouseButtonEventArgs e)
         {
-            targetFiles.Remove(lstEntry.SelectedIndex);
-        }
-
-        private void EditRow(string key, string value) {
-            if (lstEntry == null) return;
-            if (lstEntry.SelectedItems == null) return;
-            List<string> movPathList = new List<string>();
-
-            foreach (var current in lstEntry.SelectedItems)
+            TarFile selectedRow = (TarFile)this.tarFileDataGrid.SelectedItem;
+            if (selectedRow == null)
             {
-                TargetFile selectedRow = (TargetFile)current;
-                movPathList.Add(selectedRow.MovPath);
-            }
-            var dic = new Dictionary<string, string>();
-            foreach (var path in movPathList)
-            {
-                if (key == "rot")
-                    targetFiles.EditRot(path, ParseCombo(value, 0));
-                else if (key == "people")
-                    targetFiles.EditPeople(path, ParseCombo(value, 1));
-                else if (key == "eventid")
-                    targetFiles.EditEventId(path, ParseCombo(value, 0));
+                return;
             }
         }
-
 
         private void ExecuteTrackingButton_Click(object sender, RoutedEventArgs e)
         {
@@ -116,9 +158,7 @@ namespace PoseTracker
 
         private void ExecProcess(string mode) {
             try {
-                List<TargetFile> targetFileList = new List<TargetFile>();
-                targetFileList = targetFiles.GetFiletList();
-                foreach (TargetFile targetFile in targetFileList)
+                foreach (TarFile targetFile in _Bind.TarFileProps)
                 {
                     string trkFolderPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(targetFile.MovPath)), "trk");
                     string trkMovFilePath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(targetFile.MovPath)), "trkmov", targetFile.MovName);
@@ -126,7 +166,7 @@ namespace PoseTracker
                     // 第1引数がコマンド、第2引数がコマンドの引数
                     ProcessStartInfo app = new ProcessStartInfo();
                     app.FileName = App.pythonExePath;
-                    app.Arguments = @"""" + App.pythonScriptPath + @"\optracker\face_tracking.py"" --mode " + mode + @" --mov """ + targetFile.MovPath + @""" -m """ + targetFile.MeventPath + @""" --trk """ + trkFolderPath + @""" -r " + targetFile.Rot.ToString() + @" -o """ + trkMovFilePath + @""" -p " + targetFile.People.ToString() + " -e " + targetFile.EventId.ToString() + " -s 0.4";
+                    app.Arguments = @"""" + App.pythonScriptPath + @"\optracker\face_tracking.py"" --mode " + mode + @" --mov """ + targetFile.MovPath + @""" -m """ + targetFile.MeventPath + @""" --trk """ + trkFolderPath + @""" -r " + targetFile.Rot.ToString() + @" -o """ + trkMovFilePath + @""" -p " + targetFile.PeopleNum.ToString() + " -e " + targetFile.EventId.ToString() + " -s 0.4";
                     // コマンド実行
                     Process process = Process.Start(app);
                     process.WaitForExit();
@@ -139,28 +179,12 @@ namespace PoseTracker
             }
         }
 
-        private void Rot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string newVal = (e.AddedItems[0] as ComboBoxItem).Content as string;
-            EditRow("rot", newVal);
-        }
-        private void People_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string newVal = (e.AddedItems[0] as ComboBoxItem).Content as string;
-            EditRow("people", newVal);
-        }
-        private void EventId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string newVal = (e.AddedItems[0] as ComboBoxItem).Content as string;
-            EditRow("eventid", newVal);
-        }
-
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             ProcessStartInfo app = new ProcessStartInfo();
             try
             {
-                TargetFile selectedRow = (TargetFile)lstEntry.SelectedItem;
+                TarFile selectedRow = (TarFile)this.tarFileDataGrid.SelectedItem;
                 if (selectedRow == null)
                 {
                     throw new Exception("動画が選択されていません。");

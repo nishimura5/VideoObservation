@@ -51,57 +51,44 @@
         <StackPanel Grid.Row="1" Margin="5,17,5.333,17" VerticalAlignment="Center" Grid.ColumnSpan="2">
             <DockPanel Width="480">
                 <Button Content="動画追加" Width="70" Margin="5,0,5,0" Click="SelectAndOpenMovieButton_Click"/>
-                <ComboBox x:Name="EditRot" SelectedIndex="0" VerticalAlignment="Center" Grid.Column="0" Margin="5,0,5,0" SelectionChanged="Rot_SelectionChanged">
-                    <ComboBoxItem Content="回転(CCW)"/>
-                    <ComboBoxItem Content="0"/>
-                    <ComboBoxItem Content="90"/>
-                    <ComboBoxItem Content="270"/>
-                </ComboBox>
-                <ComboBox x:Name="EditPeople" SelectedIndex="0" VerticalAlignment="Center" Grid.Column="0" Margin="5,0,5,0" SelectionChanged="People_SelectionChanged">
-                    <ComboBoxItem Content="人数"/>
-                    <ComboBoxItem Content="1"/>
-                    <ComboBoxItem Content="2"/>
-                    <ComboBoxItem Content="3"/>
-                    <ComboBoxItem Content="4"/>
-                    <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="6"/>
-                    <ComboBoxItem Content="7"/>
-                    <ComboBoxItem Content="8"/>
-                    <ComboBoxItem Content="9"/>
-                    <ComboBoxItem Content="10"/>
-                </ComboBox>
-                <ComboBox x:Name="EditEventId" SelectedIndex="0" VerticalAlignment="Center" Grid.Column="0" Margin="5,0,5,0" SelectionChanged="EventId_SelectionChanged">
-                    <ComboBoxItem Content="イベントID"/>
-                    <ComboBoxItem Content="0"/>
-                    <ComboBoxItem Content="1"/>
-                    <ComboBoxItem Content="2"/>
-                    <ComboBoxItem Content="3"/>
-                    <ComboBoxItem Content="4"/>
-                    <ComboBoxItem Content="5"/>
-                </ComboBox>
                 <Button Content="イベント編集" Margin="5,0,5,0" MaxWidth="90" Click="EditButton_Click"/>
             </DockPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Margin="5,0,5.333,0" VerticalAlignment="Top" Grid.ColumnSpan="2" >
-            <ListView Name="lstEntry" ItemsSource="{Binding Path=Items}" SelectedItem="{Binding Path=SelectedItem}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="5">
-                <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" >
-                        <GridViewColumn Header="動画フルパス" DisplayMemberBinding="{Binding Path=MovPath}" Width="0"/>
-                        <GridViewColumn Header="イベントフルパス" DisplayMemberBinding="{Binding Path=MovPath}" Width="0"/>
-                        <GridViewColumn Header="動画ファイル名" DisplayMemberBinding="{Binding Path=MovName}" Width="200"/>
-                        <GridViewColumn Header="イベントファイル名" DisplayMemberBinding="{Binding Path=MeventName}" Width="200"/>
-                        <GridViewColumn Header="回転" DisplayMemberBinding="{Binding Path=Rot}" Width="60"/>
-                        <GridViewColumn Header="人数" DisplayMemberBinding="{Binding Path=People}" Width="60"/>
-                        <GridViewColumn Header="イベントID" DisplayMemberBinding="{Binding Path=EventId}" Width="60" />
-                    </GridView>
-                </ListView.View>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
+            <DataGrid Name="tarFileDataGrid"
+                      ItemsSource="{Binding TarFileProps}"
+                      SelectedItem=""
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                                    <Border BorderThickness="0" Background="#83919f">
+                                        <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value="White" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="True" Header="動画ファイル" Binding="{Binding MovName}" Width="200"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="イベントファイル" Binding="{Binding MeventName}" Width="200"/>
+                    <DataGridComboBoxColumn Header="回転" x:Name="rotCombobox" SelectedItemBinding="{Binding Rot, Mode=TwoWay}" Width="60" />
+                    <DataGridComboBoxColumn Header="人数" x:Name="peopleNumCombobox" SelectedItemBinding="{Binding PeopleNum, Mode=TwoWay}" Width="60" />
+                    <DataGridComboBoxColumn Header="イベントID" x:Name="eventIdCombobox" SelectedItemBinding="{Binding EventId, Mode=TwoWay}" Width="60" />
+                </DataGrid.Columns>
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
                         <EventSetter Event="MouseLeftButtonUp" Handler="ListViewItem_Click"/>
                         <EventSetter Event="MouseRightButtonUp" Handler="Remove_Click"/>
                     </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+                </DataGrid.Resources>
+            </DataGrid>
+            
         </StackPanel>
         <StackPanel Grid.Row="3" Margin="5,13.333,5.333,12.667" VerticalAlignment="Center" Grid.ColumnSpan="2">
             <DockPanel HorizontalAlignment="Center">
