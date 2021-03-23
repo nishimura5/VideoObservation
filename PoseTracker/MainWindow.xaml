@@ -80,6 +80,7 @@
                     <DataGridComboBoxColumn Header="回転" x:Name="rotCombobox" SelectedItemBinding="{Binding Rot, Mode=TwoWay}" Width="60" />
                     <DataGridComboBoxColumn Header="人数" x:Name="peopleNumCombobox" SelectedItemBinding="{Binding PeopleNum, Mode=TwoWay}" Width="60" />
                     <DataGridComboBoxColumn Header="イベントID" x:Name="eventIdCombobox" SelectedItemBinding="{Binding EventId, Mode=TwoWay}" Width="60" />
+                    <DataGridComboBoxColumn Header="出力動画倍率" x:Name="outScaleCombobox" SelectedItemBinding="{Binding OutScale, Mode=TwoWay}" Width="90" />
                 </DataGrid.Columns>
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">

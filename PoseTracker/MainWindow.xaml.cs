@@ -54,6 +54,7 @@ namespace PoseTracker
         public List<int> rotList { get; set; }
         public List<int> peopleList { get; set; }
         public List<int> eventIdList { get; set; }
+        public List<double> outScaleList { get; set; }
 
         public MainWindow()
         {
@@ -65,6 +66,8 @@ namespace PoseTracker
             peopleNumCombobox.ItemsSource = peopleList;
             eventIdList = new List<int>() {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
             eventIdCombobox.ItemsSource = eventIdList;
+            outScaleList = new List<double>() { 1.0, 0.5, 0.25};
+            outScaleCombobox.ItemsSource = outScaleList;
 
             _Bind = new Bind();
             this.DataContext = _Bind;
@@ -91,7 +94,7 @@ namespace PoseTracker
             string meventFileName = Path.GetFileNameWithoutExtension(movieFilePath);
             string meventFilePath = Path.Combine(orgFolderPathStr, "mevent", meventFileName + ".mevent");
 
-            TarFile tarFile = new TarFile(movieFilePath, meventFilePath, 0, 1, 0);
+            TarFile tarFile = new TarFile(movieFilePath, meventFilePath, 0, 1, 0, 1.0);
             _Bind.TarFileProps.Add(tarFile);
         }
 
@@ -166,7 +169,15 @@ namespace PoseTracker
                     // 第1引数がコマンド、第2引数がコマンドの引数
                     ProcessStartInfo app = new ProcessStartInfo();
                     app.FileName = App.pythonExePath;
-                    app.Arguments = @"""" + App.pythonScriptPath + @"\optracker\face_tracking.py"" --mode " + mode + @" --mov """ + targetFile.MovPath + @""" -m """ + targetFile.MeventPath + @""" --trk """ + trkFolderPath + @""" -r " + targetFile.Rot.ToString() + @" -o """ + trkMovFilePath + @""" -p " + targetFile.PeopleNum.ToString() + " -e " + targetFile.EventId.ToString() + " -s 0.4";
+                    app.Arguments = @"""" + App.pythonScriptPath + @"\optracker\face_tracking.py"" --mode " + mode + 
+                        @" --mov """ + targetFile.MovPath + 
+                        @""" -m """ + targetFile.MeventPath + 
+                        @""" --trk """ + trkFolderPath + 
+                        @""" -r " + targetFile.Rot.ToString() + 
+                        @" -o """ + trkMovFilePath + 
+                        @""" -p " + targetFile.PeopleNum.ToString() + 
+                        " -e " + targetFile.EventId.ToString() + 
+                        " -s " + targetFile.OutScale.ToString();
                     // コマンド実行
                     Process process = Process.Start(app);
                     process.WaitForExit();

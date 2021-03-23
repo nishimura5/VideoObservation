@@ -87,8 +87,8 @@ class FaceTracking:
                     logger.error('frame is None')
                     continue
                 dst_img = opdf.detect(frame, frame_pos)
-                trkproc.put_frame_pos(dst_img, frame_pos, self.out_mov_resize)
                 out_img = cv2.resize(dst_img, self.out_img_size)
+                trkproc.put_frame_pos(out_img, frame_pos, self.out_mov_resize)
                 cv2.imshow(self.file_name, out_img)
                 if self.out is not None:
                     self.out.write(out_img)
@@ -164,18 +164,24 @@ class FaceTracking:
                 except:
                     pass
 
+                if body_flg == True:
+                    trkproc.draw_body_bone(frame, landmarks, self.out_mov_resize)
+                else:
+                    trkproc.draw_face_bone(frame, landmarks, self.out_mov_resize)
+
                 for label, pos in enumerate(landmarks):
                     if pd.isnull(pos[0]):
                         continue
                     else:
                         pos = (int(pos[0]*self.out_mov_resize), int(pos[1]*self.out_mov_resize))
 
+
                     if label == 0:
                         trkproc.put_name(frame, name, pos)
                     elif label == 68 or label == 69:
-                        cv2.circle(frame, pos, 4, (30,0,200), -1)
+                        cv2.circle(frame, pos, 3, (30,0,200), -1)
                     elif label in draw_point_list:
-                        cv2.circle(frame, pos, 3, (0,244,0), 2)
+                        cv2.circle(frame, pos, 2, (0,244,0), 1)
     #                    cv2.putText(frame, '%d'%label, tuple(pos), cv2.FONT_HERSHEY_PLAIN, 0.5, (0, 244, 0), 1)
                     else:
                         continue

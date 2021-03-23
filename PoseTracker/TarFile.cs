@@ -16,6 +16,7 @@ namespace PoseTracker
         public int Rot { get; set; }
         public int PeopleNum { get; set; }
         public int EventId { get; set; }
+        public double OutScale { get; set; }
 
         public TarFile()
         {
@@ -26,9 +27,10 @@ namespace PoseTracker
             Rot = 0;
             PeopleNum = 1;
             EventId = 0;
+            OutScale = 1.0;
         }
 
-        public TarFile(string DefMovPath, string DefMeventPath, int DefRot, int DefPeopleNum, int DefEventId)
+        public TarFile(string DefMovPath, string DefMeventPath, int DefRot, int DefPeopleNum, int DefEventId, double DefOutScale)
         {
             MovPath = DefMovPath;
             MovName = Path.GetFileName(MovPath);
@@ -37,6 +39,7 @@ namespace PoseTracker
             Rot = DefRot;
             PeopleNum = DefPeopleNum;
             EventId = DefEventId;
+            OutScale = DefOutScale;
         }
     }
 }
