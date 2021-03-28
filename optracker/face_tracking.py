@@ -101,9 +101,9 @@ class FaceTracking:
 
             face_df = opdf.get_face_trk()
             logger.info('dst_trk_path={}'.format(dst_trk_path))
-            face_df.to_csv(dst_trk_path)
+            trkproc.concat(dst_trk_path, face_df)
             body_df = opdf.get_body_trk()
-            body_df.to_csv(dst_body_trk_path)
+            trkproc.concat(dst_body_trk_path, body_df)
         except Exception as e:
             logger.error(self._traceback_parser(e))
         cv2.destroyAllWindows()

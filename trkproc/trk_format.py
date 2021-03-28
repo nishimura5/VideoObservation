@@ -1,3 +1,4 @@
+import os
 import sys
 import logging
 
@@ -39,4 +40,13 @@ def gen_blank_df(frame_pos_list, name_list, code_list, col_num=2):
     m_index = pd.MultiIndex.from_tuples(tar_dict.keys(), names=names)
     blank_df= pd.DataFrame(list(tar_dict.values()), index=m_index)
     return blank_df
+
+def concat(tar_trk_path, add_df):
+    if os.path.exists(tar_trk_path):
+        dtyp = {'frame':'int32', 'name':'object', 'code':'object', 'x':'Int64', 'y':'Int64'}
+        trk_df = pd.read_csv(tar_trk_path, dtype=dtyp).set_index(['frame', 'name', 'code'])
+        new_df = pd.concat([trk_df, add_df]).sort_index()
+        new_df.to_csv(tar_trk_path)
+    else:
+        add_df.to_csv(tar_trk_path)
 
