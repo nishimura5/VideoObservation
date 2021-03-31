@@ -1,0 +1,3 @@
+;comment=肩幅
+pointA,pointB,func,legend,color
+2,5,p95,肩幅(2-5),#904f4f
