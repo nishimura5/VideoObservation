@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "BehavioralObservation"
-#define MyAppVersion "0.1.0.0"
+#define MyAppVersion "0.2.0.0"
 #define MyAppPublisher "EigoNishimura"
 #define MyAppURL "https://github.com/nishimura5/VideoObservation"
 #define MeventEditorName "MeventEditor.exe"
