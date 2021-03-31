@@ -1,0 +1,4 @@
+;comment=口の形
+pointA,pointB,func,legend,color
+62,66,p95,口縦(62-66),#904f4f
+60,64,p95,口横(60-64),#4f904f
