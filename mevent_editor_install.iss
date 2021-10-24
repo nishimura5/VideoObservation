@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MeventEditor"
-#define MyAppVersion "0.4.0.0"
+#define MyAppVersion "0.5.0.0"
 #define MyAppPublisher "EigoNishimura"
 #define MyAppURL "https://github.com/nishimura5/VideoObservation"
 #define MyAppExeName "MeventEditor.exe"
@@ -45,7 +45,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "MeventEditor\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "mevent\*"; DestDir: "{app}\mevent"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Miniconda38_64.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "python-3.9.7-embed-amd64\*"; DestDir: "{app}\python-3.9.7-embed-amd64"; Flags: ignoreversion recursesubdirs createallsubdirs
+
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue

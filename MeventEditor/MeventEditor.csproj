@@ -96,7 +96,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PythonInstall.cs" />
     <Compile Include="TargetMovie.cs" />
     <Compile Include="MeventData.cs" />
     <Compile Include="MainWindow.xaml.cs">

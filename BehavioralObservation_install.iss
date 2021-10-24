@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "BehavioralObservation"
-#define MyAppVersion "0.2.0.0"
+#define MyAppVersion "0.3.0.0"
 #define MyAppPublisher "EigoNishimura"
 #define MyAppURL "https://github.com/nishimura5/VideoObservation"
 #define MeventEditorName "MeventEditor.exe"
@@ -44,11 +44,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "MeventEditor\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "PoseTracker\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "TrkPlotter\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "MinicondaInstaller\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "mevent\*"; DestDir: "{app}\mevent"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "optracker\*"; DestDir: "{app}\optracker"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "trkproc\*"; DestDir: "{app}\trkproc"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Miniconda38_64.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "python-3.9.7-embed-amd64\*"; DestDir: "{app}\python-3.9.7-embed-amd64"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\Applications\{#MeventEditorName}\SupportedTypes"; ValueType: string; ValueName: ".mevent"; ValueData: ""
