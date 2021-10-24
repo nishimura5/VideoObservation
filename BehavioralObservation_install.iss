@@ -44,10 +44,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "MeventEditor\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "PoseTracker\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "TrkPlotter\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "mevent\*"; DestDir: "{app}\mevent"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "optracker\*"; DestDir: "{app}\optracker"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "trkproc\*"; DestDir: "{app}\trkproc"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "python-3.9.7-embed-amd64\*"; DestDir: "{app}\python-3.9.7-embed-amd64"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "mevent\*"; DestDir: "{app}\mevent"; Excludes: "__pycache__"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "optracker\*"; DestDir: "{app}\optracker"; Excludes: "__pycache__"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "trkproc\*"; DestDir: "{app}\trkproc"; Excludes: "__pycache__"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "python-3.9.7-embed-amd64\*"; DestDir: "{app}\python-3.9.7-embed-amd64"; Excludes: "__pycache__"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\Applications\{#MeventEditorName}\SupportedTypes"; ValueType: string; ValueName: ".mevent"; ValueData: ""
