@@ -8,7 +8,7 @@ class CalclistList:
     def __init__(self, tar_dir_path, trk_path):
         try:
             trk_path = pathlib.Path(trk_path)
-            tar_dir_path = pathlib.Path(tar_dir_path)
+            tar_dir_path = pathlib.Path(tar_dir_path).joinpath('calclist')
 
             suffix = trk_path.stem.split('_')[-1]
             if suffix == 'body':

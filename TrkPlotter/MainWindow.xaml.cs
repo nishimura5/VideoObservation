@@ -192,7 +192,7 @@ namespace TrkPlotter
 
         private async Task StartSavePng()
         {
-            string tarCalclistFilePath = Path.Combine(App.trkprocPath, calclistCombo.SelectedValue.ToString());
+            string tarCalclistFilePath = Path.Combine(App.trkprocPath, "calclist", calclistCombo.SelectedValue.ToString());
             string tarMeventFilePath = meventFilePath.Text;
             int tarGraphWidth = TextBoxToInt(graphWidth);
             int tarGraphHeight = TextBoxToInt(graphHeight);
@@ -245,7 +245,7 @@ namespace TrkPlotter
         private void SaveCsvButton_Click(object sender, RoutedEventArgs e)
         {
             string tarMeventFilePath = meventFilePath.Text;
-            string tarCalclistFilePath = Path.Combine(App.trkprocPath, calclistCombo.SelectedValue.ToString());
+            string tarCalclistFilePath = Path.Combine(App.trkprocPath, "calclist", calclistCombo.SelectedValue.ToString());
             int tarEventId = int.Parse(eventID.Text);
             using (Py.GIL())
             {

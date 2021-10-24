@@ -91,7 +91,8 @@ class LinePlot:
                     ax.plot(self.time_arr, self.data_df.loc[pd.IndexSlice[:,name], line['points']].to_numpy(), color=line['color'], linewidth=0.5, label=line['legend'])
             except Exception as e:
                 logger.error(e)
-                logger.error('self.time_arr={}'.format(self.time_arr))
+                logger.error('self.data_df={}'.format(self.data_df))
+#                logger.error('self.time_arr={}'.format(self.time_arr))
                 raise Exception(e)
 
             try:
@@ -137,32 +138,37 @@ class LinePlot:
     def plot_violins(self, ylim=None):
         self.gs = self.fig.add_gridspec(self.member_arr.size, 2)
         logger.info('self.line_list={}'.format(self.line_list))
-        for i, name in enumerate(self.member_arr):
-            ax = self.fig.add_subplot(self.gs[i, 1])
-            datas = [self.data_df.loc[pd.IndexSlice[:,name], p['points']].dropna().to_numpy() for p in self.line_list]
-            labels = [p['legend'] for p in self.line_list]
-            vparts = ax.violinplot(datas, showmeans=True, showextrema=True, showmedians=True)
-            ax.set_xticks(range(1,len(labels)+1))
-            ax.set_xticklabels(labels)
+        try:
+            for i, name in enumerate(self.member_arr):
+                ax = self.fig.add_subplot(self.gs[i, 1])
+                datas = [self.data_df.loc[pd.IndexSlice[:,name], p['points']].dropna().to_numpy() for p in self.line_list]
+                labels = [p['legend'] for p in self.line_list]
+                vparts = ax.violinplot(datas, showmeans=True, showextrema=True, showmedians=True)
+                ax.set_xticks(range(1,len(labels)+1))
+                ax.set_xticklabels(labels)
 
-            for partname in ('cbars', 'cmins', 'cmaxes', 'cmeans', 'cmedians'):
-                vpart = vparts[partname]
-                if partname == 'cmeans':
-                    vpart.set_edgecolor('#ee3333')  #平均値は赤線
-                elif partname == 'cmedians':
-                    vpart.set_edgecolor('#3333ee')  #中央値は青線
-                else:
-                    vpart.set_edgecolor('#333333')
-                vpart.set_linewidth(0.5)
+                for partname in ('cbars', 'cmins', 'cmaxes', 'cmeans', 'cmedians'):
+                    vpart = vparts[partname]
+                    if partname == 'cmeans':
+                        vpart.set_edgecolor('#ee3333')  #平均値は赤線
+                    elif partname == 'cmedians':
+                        vpart.set_edgecolor('#3333ee')  #中央値は青線
+                    else:
+                        vpart.set_edgecolor('#333333')
+                    vpart.set_linewidth(0.5)
 
-            colors = [p['color'] for p in self.line_list]
-            for vpart, color in zip(vparts['bodies'], colors):
-                vpart.set_facecolor(color)
-                vpart.set_edgecolor(color)
-                vpart.set_linewidth(0.5)
+                colors = [p['color'] for p in self.line_list]
+                for vpart, color in zip(vparts['bodies'], colors):
+                    vpart.set_facecolor(color)
+                    vpart.set_edgecolor(color)
+                    vpart.set_linewidth(0.5)
 
-            if ylim is not None:
-                ax.set_ylim(top=ylim[0], bottom=ylim[1])
+                if ylim is not None:
+                    ax.set_ylim(top=ylim[0], bottom=ylim[1])
+        except Exception as e:
+            logger.error(e)
+            logger.error(datas)
+            raise Exception(e)
 
 
     ## frame番号を時刻(secとtimedeltaとstring)に変換したカラムを生成

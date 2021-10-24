@@ -1,4 +1,4 @@
-;comment=目の開閉
+;comment=目の開閉(95%ile正規化)
 pointA,pointB,func,legend,color
 38,40,p95,右目(38-40),#904f4f
 43,47,p95,左目(43-47),#4f904f

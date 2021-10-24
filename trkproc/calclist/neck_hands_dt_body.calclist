@@ -1,0 +1,5 @@
+;comment=首と手(dt)
+pointA,pointB,func,legend,color
+1,d30,*1,首,#904f4f
+4,d30,*1,右手,#008080
+7,d30,*1,左手,#ffa500

@@ -113,11 +113,12 @@ class OpPointMeasurement(point_measurement.PointMeasurement):
 #                    logger.debug('tar_df=\n{}'.format(tar_df))
                     col_name = row.pointA
                 elif row.pointB == 'x' or row.pointB == 'y':
-                    tar_df = self.tar_p2p_df[row.pointA].unstack(level=2).loc[:,[row.pointB]].rename(columns={row.pointB:row.pointA})
-                    col_name = row.pointA
-                ## pointAとpointBに同じ値 = 移動量
-                elif row.pointA == row.pointB:
-                    tar_df = self.calc_diff(row.pointA, 60)
+                    tar_df = self.tar_p2p_df[row.pointA].unstack(level=2).loc[:,[row.pointB]].rename(columns={row.pointB:row.pointA+'_'+row.pointB})
+                    logger.debug(tar_df)
+                    col_name = row.pointA+'_'+row.pointB
+                ## pointBの先頭がd = 移動量(dの次がstepのフレーム数)
+                elif row.pointB[0] == 'd':
+                    tar_df = self.calc_diff(row.pointA, int(row.pointB[1:]))
                     col_name = row.pointA+'_diff'
                 ## それ以外 = 距離
                 else:

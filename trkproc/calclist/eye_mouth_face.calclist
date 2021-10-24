@@ -1,4 +1,4 @@
-;comment=口の開閉と顔の動き
+;comment=口の開閉と顔の動き(95%ile正規化)
 pointA,pointB,func,legend,color
 62,66,p95,口(62-66),#4f904f
 pitch,,r-45~45,顔の向き(pitch),#904f4f
