@@ -1,4 +1,5 @@
 import sys, os
+import traceback
 from argparse import ArgumentParser
 import pathlib
 import re
@@ -7,6 +8,7 @@ import cv2
 import pandas as pd
 
 dir_path = pathlib.Path(__file__).resolve().parent
+sys.path.append(str(dir_path))
 sys.path.append(str(dir_path.parent))
 import pyopenpose_to_df
 import mevent
@@ -151,8 +153,12 @@ class FaceTracking:
                 raise
 
             for name in name_list:
-                tar_df = trk_df.loc[pd.IndexSlice[frame_pos, name, :], :]
-                landmarks = tar_df.values.tolist()
+                try:
+                    tar_df = trk_df.loc[pd.IndexSlice[frame_pos, name, :], :]
+                    landmarks = tar_df.values.tolist()
+                except Exception as e:
+                    logger.error(e)
+                    raise
 
                 try:
                     ## モザイク
@@ -164,29 +170,28 @@ class FaceTracking:
                 except:
                     pass
 
-                if body_flg == True:
-                    trkproc.draw_body_bone(frame, landmarks, self.out_mov_resize)
-                else:
-                    trkproc.draw_face_bone(frame, landmarks, self.out_mov_resize)
-
-                for label, pos in enumerate(landmarks):
-                    if pd.isnull(pos[0]):
-                        continue
-                    else:
-                        pos = (int(pos[0]*self.out_mov_resize), int(pos[1]*self.out_mov_resize))
-
-
-                    if label == 0:
-                        trkproc.put_name(frame, name, pos)
-                    elif label == 68 or label == 69:
-                        cv2.circle(frame, pos, 3, (30,0,200), -1)
-                    elif label in draw_point_list:
-                        cv2.circle(frame, pos, 2, (0,244,0), 1)
-    #                    cv2.putText(frame, '%d'%label, tuple(pos), cv2.FONT_HERSHEY_PLAIN, 0.5, (0, 244, 0), 1)
-                    else:
-                        continue
-
                 try:
+                    if body_flg == True:
+                        trkproc.draw_body_bone(frame, landmarks, self.out_mov_resize)
+                    else:
+                        trkproc.draw_face_bone(frame, landmarks, self.out_mov_resize)
+
+                    for label, pos in enumerate(landmarks):
+                        if pd.isnull(pos[0]):
+                            continue
+                        else:
+                            pos = (int(pos[0]*self.out_mov_resize), int(pos[1]*self.out_mov_resize))
+
+                        if label == 0:
+                            trkproc.put_name(frame, name, pos)
+                        elif label == 68 or label == 69:
+                            cv2.circle(frame, pos, 3, (30,0,200), -1)
+                        elif label in draw_point_list:
+                            cv2.circle(frame, pos, 2, (0,244,0), 1)
+#                            cv2.putText(frame, '%d'%label, tuple(pos), cv2.FONT_HERSHEY_PLAIN, 0.5, (0, 244, 0), 1)
+                        else:
+                            continue
+
                     ## 頭部姿勢推定
                     dir_point = tar_df.loc[pd.IndexSlice[frame_pos, name,('30', 'dir_point')], : ].values
                     if dir_point.size < 4:
@@ -196,7 +201,7 @@ class FaceTracking:
                         p2 = (int(dir_point[1][0]*self.out_mov_resize), int(dir_point[1][1]*self.out_mov_resize))
                         cv2.arrowedLine(frame, p1, p2, (5,00,255), 2)
                 except Exception as e:
-                    logger.error(e)
+                    logger.error(self._traceback_parser(e))
                     raise
 
             cv2.imshow('play', frame)

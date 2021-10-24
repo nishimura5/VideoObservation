@@ -9,13 +9,19 @@ import pandas as pd
 ## dll用
 dir_path = pathlib.Path(__file__).resolve().parent
 bin_path = dir_path.joinpath('bin')
-os.environ['PATH'] = os.environ['PATH'] + ';' + str(bin_path) + ';'
+os.environ['PATH'] = str(dir_path) + ';' + str(bin_path) + ';'\
+        + os.path.join(os.environ['CUDA_PATH'], 'bin') + ';'\
+        + 'C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v10.0\\bin;'
+
+sys.path.append(str(bin_path))
+os.add_dll_directory(str(bin_path))
+os.add_dll_directory('C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v10.2\\bin')
+os.add_dll_directory('C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v10.0\\bin')
 
 import pyopenpose as op
 import direction_estimation
 import trkproc
 
-os.add_dll_directory(os.path.join(os.environ['CUDA_PATH'], 'bin'))
 from optracker import logger
 
 ## Openposeの結果をDataFrameとして取得するためのクラス

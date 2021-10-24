@@ -28,7 +28,10 @@ def put_name(src_img, name, pos):
 def draw_body_bone(src_img, landmarks, out_mov_resize):
     points = []
     for landmark in landmarks:
-        points.append((int(landmark[0] * out_mov_resize), int(landmark[1] * out_mov_resize)))
+        if(isinstance(landmark[0], int) == False):
+            points.append((0, 0))
+        else:
+            points.append((int(landmark[0] * out_mov_resize), int(landmark[1] * out_mov_resize)))
 
     put_line(src_img, points, 0, 1)
     put_line(src_img, points, 0, 15)
@@ -62,7 +65,10 @@ def draw_body_bone(src_img, landmarks, out_mov_resize):
 def draw_face_bone(src_img, landmarks, out_mov_resize):
     points = []
     for landmark in landmarks:
-        points.append((int(landmark[0] * out_mov_resize), int(landmark[1] * out_mov_resize)))
+        if(isinstance(landmark[0], int) == False):
+            points.append((0, 0))
+        else:
+            points.append((int(landmark[0] * out_mov_resize), int(landmark[1] * out_mov_resize)))
 
     put_line(src_img, points, 17, 18)
     put_line(src_img, points, 18, 19)

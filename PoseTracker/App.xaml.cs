@@ -82,7 +82,7 @@ namespace PoseTracker
                 // *-------------------------------------------------------*
 
                 // python環境にパスを通す、規定値でpython.exeが見つからなかったらApp.configの値を参照
-                var PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "miniconda38_64");
+                var PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "python-3.9.7-embed-amd64");
                 if (File.Exists(Path.Combine(PYTHON_HOME, "python.exe")) == false)
                 {
                     PYTHON_HOME = ConfigurationManager.AppSettings.Get("pythonPath");
@@ -98,7 +98,7 @@ namespace PoseTracker
                     Process process = Process.Start(app);
                     process.WaitForExit();
                     process.Close();
-                    PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "miniconda38_64");
+                    PYTHON_HOME = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "python-3.9.7-embed-amd64");
                 }
 
                 // pythonnetが、python本体のDLLおよび依存DLLを見つけられるようにする

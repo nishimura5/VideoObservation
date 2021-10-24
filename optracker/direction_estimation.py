@@ -94,13 +94,13 @@ class DirectionEstimation:
         p2 = (int(reproject_dst[0][0][0]), int(reproject_dst[0][0][1]))
         if self.draw_axis == True:
             cv2.arrowedLine(self.src_img, p1, p2, (255,0,0), 2)
-            cv2.circle(self.src_img, tuple(f_points[30][:2]), 6, (10, 240, 20), -1)
-            cv2.circle(self.src_img, tuple(f_points[36][:2]), 6, (10, 240, 20), -1) ## 右目
-            cv2.circle(self.src_img, tuple(f_points[45][:2]), 6, (10, 240, 20), -1) ## 左目
-            cv2.circle(self.src_img, tuple(b_points[17][:2]), 6, (10, 240, 20), -1) ## 右耳
-            cv2.circle(self.src_img, tuple(b_points[18][:2]), 6, (10, 240, 20), -1) ## 左耳
-            cv2.circle(self.src_img, tuple(f_points[48][:2]), 6, (10, 240, 20), -1) ## 右口角
-            cv2.circle(self.src_img, tuple(f_points[54][:2]), 6, (10, 240, 20), -1) ## 左口角
+            cv2.circle(self.src_img, tuple(f_points[30][:2].astype(np.int)), 6, (10, 240, 20), -1)
+            cv2.circle(self.src_img, tuple(f_points[36][:2].astype(np.int)), 6, (10, 240, 20), -1) ## 右目
+            cv2.circle(self.src_img, tuple(f_points[45][:2].astype(np.int)), 6, (10, 240, 20), -1) ## 左目
+            cv2.circle(self.src_img, tuple(b_points[17][:2].astype(np.int)), 6, (10, 240, 20), -1) ## 右耳
+            cv2.circle(self.src_img, tuple(b_points[18][:2].astype(np.int)), 6, (10, 240, 20), -1) ## 左耳
+            cv2.circle(self.src_img, tuple(f_points[48][:2].astype(np.int)), 6, (10, 240, 20), -1) ## 右口角
+            cv2.circle(self.src_img, tuple(f_points[54][:2].astype(np.int)), 6, (10, 240, 20), -1) ## 左口角
 
         ## ロドリゲスの回転公式
         ret_R, jacob = cv2.Rodrigues(rotation_vec)
