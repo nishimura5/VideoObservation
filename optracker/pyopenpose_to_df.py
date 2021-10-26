@@ -6,16 +6,16 @@ import cv2
 import numpy as np
 import pandas as pd
 
+CUDA_PATH = 'C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.5\\bin;'
 ## dll用
 dir_path = pathlib.Path(__file__).resolve().parent
 bin_path = dir_path.joinpath('bin')
-os.environ['PATH'] = str(dir_path) + ';' + str(bin_path) + ';'\
-        + os.path.join(os.environ['CUDA_PATH'], 'bin') + ';'\
-        + 'C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.5\\bin;'
+os.environ['PATH'] = str(dir_path) + ';' + str(bin_path) + ';' + CUDA_PATH
 
 sys.path.append(str(bin_path))
 os.add_dll_directory(str(bin_path))
-os.add_dll_directory('C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.5\\bin')
+if os.path.exists(CUDA_PATH) == True:
+    os.add_dll_directory(CUDA_PATH)
 
 import pyopenpose as op
 import direction_estimation
