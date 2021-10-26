@@ -32,24 +32,18 @@ TrkPlotter.exeは、PoseTracker.exeで得られた[キーポイント](#OpenPose
 
 ### 動作環境
 - Windows10(x64)
-- cuda 10.0 (PoseTracker.exeでのみ使用)
+- cuda 11.5 (PoseTracker.exeでのみ使用)
 - cudnn 7 (PoseTracker.exeでのみ使用)
-- Python 3.8
+- Python 3.9
   - OpenCV 4.5
-  - Pandas 1.2
-  - Matplotlib 3.3
-  - Scipy 1.6
-  - Scikit-learn 0.24
+  - Pandas 1.2.5
+  - Matplotlib 3.4.3
+  - Scipy 1.7.1
+  - Scikit-learn 1.0
 
 ### インストール
-以下を参考にして下さい。
-<p align="center">
-  <a href="http://www.youtube.com/watch?v=XOiwKO82Op4"> <img src="http://img.youtube.com/vi/XOiwKO82Op4/0.jpg" width="500"> </a>
-</p>
-
-BehavioralObservationはC#からPythonを実行する技術「[pythonnet](https://github.com/pythonnet/pythonnet)」を使用しており、MeventEditor.exeの初回起動時にPython環境(miniconda)をインストールする仕様となっています。
-
-または、MeventEditor.exe.configのkey=pythonPathにpython.exeのパスを記述することで、既存のPython環境を使用することも可能です。
+[Release](https://github.com/nishimura5/VideoObservation/releases)から最新のバージョンをインストールしてください。
+別途CUDA 11.5をインストールしてください。
 
 ## ファイルフォーマット
 BehavioralObservationが扱うファイルフォーマットは次のとおりです。各ファイルを直接テキストエディタで編集する場合は、フォーマットに注意してください。
