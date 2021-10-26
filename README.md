@@ -42,8 +42,8 @@ TrkPlotter.exeは、PoseTracker.exeで得られた[キーポイント](#OpenPose
   - Scikit-learn 1.0
 
 ### インストール
-[Release](https://github.com/nishimura5/VideoObservation/releases)から最新のバージョンをインストールしてください。
-別途CUDA 11.5をインストールしてください。
+[こちら(v.0.3.0.0)](https://github.com/nishimura5/VideoObservation/releases/download/v0.3.0.0-beta/BehavioralObservation_0300.zip)からダウンロードしてzipを解凍し、インストーラーを起動してください。
+別途[CUDA 11.5](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=10)をインストールしてください。
 
 ## ファイルフォーマット
 BehavioralObservationが扱うファイルフォーマットは次のとおりです。各ファイルを直接テキストエディタで編集する場合は、フォーマットに注意してください。
