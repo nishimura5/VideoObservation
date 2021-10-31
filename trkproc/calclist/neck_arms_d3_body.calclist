@@ -1,0 +1,5 @@
+;comment=首と手(3 frames delta)
+pointA,pointB,func,legend,color
+1,d3,*1,首(3f.),#904f4f
+4,d3,*1,右手(3f.),#008080
+7,d3,*1,左手(3f.),#ffa500
