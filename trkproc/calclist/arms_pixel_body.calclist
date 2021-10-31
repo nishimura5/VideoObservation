@@ -1,0 +1,4 @@
+;comment=左右腕(pixel)
+pointA,pointB,func,legend,color
+4,7,*1,右手-左手(4-7),#904f4f
+3,6,*1,右肘-左肘(3-6),#4f904f

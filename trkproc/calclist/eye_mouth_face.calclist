@@ -2,4 +2,4 @@
 pointA,pointB,func,legend,color
 62,66,p95,口(62-66),#4f904f
 pitch,,r-45~45,顔の向き(pitch),#904f4f
-30,30,p95,顔の動き(30),#4f4f90
+30,d30,p95,顔の動き(30f.),#4f4f90
