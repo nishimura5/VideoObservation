@@ -1,5 +1,6 @@
 # BehavioralObservation
 動画を用いた観察を支援するツールです。
+最新版のダウンロードは[こちら(v.0.3.0.0)](https://github.com/nishimura5/VideoObservation/releases/download/v0.3.0.0-beta/BehavioralObservation_0300.zip)
 
 ## 各ツールの概要
 BehavioralObservationは下記3つのアプリケーションによって構成されています。
@@ -42,8 +43,8 @@ TrkPlotter.exeは、PoseTracker.exeで得られた[キーポイント](#OpenPose
   - Scikit-learn 1.0
 
 ### インストール
-[Release](https://github.com/nishimura5/VideoObservation/releases)から最新のバージョンをインストールしてください。
-別途CUDA 11.5をインストールしてください。
+[こちら](https://github.com/nishimura5/VideoObservation/releases)のAssetsから最新版をダウンロードしてzipを解凍し、インストーラーを起動してください。
+別途[CUDA 11.5](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=10)をインストールしてください。
 
 ## ファイルフォーマット
 BehavioralObservationが扱うファイルフォーマットは次のとおりです。各ファイルを直接テキストエディタで編集する場合は、フォーマットに注意してください。
