@@ -1,0 +1,5 @@
+;comment=腰と足(3 frames delta)
+pointA,pointB,func,legend,color
+8,d3,*1,首(3f.),#904f4f
+11,d3,*1,右足(3f.),#008080
+14,d3,*1,左足(3f.),#ffa500

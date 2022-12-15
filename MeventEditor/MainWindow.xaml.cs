@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -250,16 +251,17 @@ namespace MeventEditor
 
         private void Movie_MouseUp(object sender, RoutedEventArgs e)
         {
-            targetMovie.Back(-1000);
+            int clickStepSecond = int.Parse(ConfigurationManager.AppSettings.Get("clickStepSecond"));
+            targetMovie.Step(-1000 * clickStepSecond);
         }
 
         private void Button_MouseEnter(object sender, RoutedEventArgs e)
         {
-            targetMovie.ChangeSpeed(0.5);
+            targetMovie.ChangeSpeed(0.5f);
         }
         private void Button_MouseLeave(object sender, RoutedEventArgs e)
         {
-            targetMovie.ChangeSpeed(1.0);
+            targetMovie.ChangeSpeed(1.0f);
         }
 
         private void ListViewItem_Click(object sender, MouseButtonEventArgs e)
@@ -274,7 +276,8 @@ namespace MeventEditor
 
         private void Movie_MouseRightUp(object sender, MouseButtonEventArgs e)
         {
-            targetMovie.Back(1000);
+            int clickStepSecond = int.Parse(ConfigurationManager.AppSettings.Get("clickStepSecond"));
+            targetMovie.Step(1000 * clickStepSecond);
         }
 
         // 一瞬sliderが0に戻ってしまうのを無理矢理修正
@@ -292,7 +295,32 @@ namespace MeventEditor
             About awin2 = new About();
             awin2.Show();
         }
+        private void ClickStepSecond_Click(object sender, RoutedEventArgs e)
+        {
+            var item = ((MenuItem)sender);
+            int clickStepSecond = int.Parse(ConfigurationManager.AppSettings.Get("clickStepSecond"));
+            if (item.IsChecked)
+            {
+                clickStepSecond = 15;
+            }
+            else 
+            {
+                clickStepSecond = 5;
+            }
+            ConfigurationManager.AppSettings.Set("clickStepSecond", clickStepSecond.ToString());
+        }
+        private void Movie_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                targetMovie.ChangeSpeed(3.0f);
+            }
+            else if (e.Delta < 0)
+            {
+                targetMovie.ChangeSpeed(1.0f);
 
+            }
+        }
         [HandleProcessCorruptedStateExceptions]
         private void Window_Closing(object sender, CancelEventArgs e)
         {

@@ -29,6 +29,9 @@
                 <MenuItem Header="ファイル">
                     <MenuItem Header="開く" Click="SelectAndOpenMovieButton_Click"/>
                 </MenuItem>
+                <MenuItem Header="再生">
+                    <MenuItem Header="15秒ステップ" IsCheckable="True"  Click="ClickStepSecond_Click"/>
+                </MenuItem>
                 <MenuItem Header="ヘルプ">
                     <MenuItem Header="MeventEditorについて" Click="About_Click"/>
                 </MenuItem>
@@ -52,7 +55,7 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Margin="5" VerticalAlignment="Center">
             <DockPanel>
-                <MediaElement x:Name="movieWindowMediaElement" HorizontalAlignment="Center" VerticalAlignment="Top" MinHeight="300" Stretch="Uniform"  Source="" UnloadedBehavior="Manual" LoadedBehavior="Manual" ScrubbingEnabled="True" MediaOpened="MovieOpened" MouseLeftButtonUp="Movie_MouseUp" MouseRightButtonUp="Movie_MouseRightUp"/>
+                <MediaElement x:Name="movieWindowMediaElement" HorizontalAlignment="Center" VerticalAlignment="Top" MinHeight="300" Stretch="Uniform"  Source="" UnloadedBehavior="Manual" LoadedBehavior="Manual" ScrubbingEnabled="True" MediaOpened="MovieOpened" MouseLeftButtonUp="Movie_MouseUp" MouseRightButtonUp="Movie_MouseRightUp" PreviewMouseWheel="Movie_PreviewMouseWheel"/>
             </DockPanel>
             <Grid>
                 <Grid.ColumnDefinitions>

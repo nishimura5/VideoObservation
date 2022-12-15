@@ -125,7 +125,7 @@ namespace MeventEditor
             return "end";
         }
 
-        public void Back(int msec)
+        public void Step(int msec)
         {
             double dbSliderValue = ProgressSlider.Value;
             if (movie.NaturalDuration.HasTimeSpan == false)
@@ -208,6 +208,7 @@ namespace MeventEditor
                 m_stateCurrent = MediaState.Play;
                 SetButtonImage("pause.png");
             }
+
         }
 
         private void SetButtonImage(string fileName)
