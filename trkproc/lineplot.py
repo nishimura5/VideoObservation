@@ -1,4 +1,5 @@
 import sys,os
+import traceback
 from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
 
 import pandas as pd
@@ -90,7 +91,7 @@ class LinePlot:
                     print('%d [%s] %s' % (i, name, line))
                     ax.plot(self.time_arr, self.data_df.loc[pd.IndexSlice[:,name], line['points']].to_numpy(), color=line['color'], linewidth=0.5, label=line['legend'])
             except Exception as e:
-                logger.error(e)
+                logger.error(self._traceback_parser(e))
                 logger.error('self.data_df={}'.format(self.data_df))
 #                logger.error('self.time_arr={}'.format(self.time_arr))
                 raise Exception(e)
@@ -193,6 +194,10 @@ class LinePlot:
             print(e)
             print(self.data_df)
             print(dummy_df)
+
+    def _traceback_parser(self, e):
+        line = traceback.format_tb(e.__traceback__)[0].split(', ')[1]
+        return '{},{}'.format(line, e)
 
     def close(self):
         plt.close()

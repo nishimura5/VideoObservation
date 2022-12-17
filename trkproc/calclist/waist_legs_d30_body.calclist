@@ -1,4 +1,4 @@
-;comment=腰と脚(30 frames delta)
+;comment=腰・足・膝の速さ(30 frames delta)
 pointA,pointB,func,legend,color
 8,d30,*1,腰(30f.),#904f4f
 11,d30,*1,右足(30f.),#008080

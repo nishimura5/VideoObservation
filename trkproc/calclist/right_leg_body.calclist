@@ -1,4 +1,4 @@
-;comment=右脚(x,y)
+;comment=右足と右膝のxy座標
 pointA,pointB,func,legend,color
 10,x,*1,右膝x,#903f3f
 10,y,*1,右膝y,#a07070

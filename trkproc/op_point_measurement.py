@@ -120,6 +120,10 @@ class OpPointMeasurement(point_measurement.PointMeasurement):
                 elif row.pointB[0] == 'd':
                     tar_df = self.calc_diff(row.pointA, int(row.pointB[1:]))
                     col_name = row.pointA+'_diff'
+                ## pointBの先頭がa = 移動量の変位量(aの次がstepのフレーム数)
+                elif row.pointB[0] == 'a':
+                    tar_df = self.calc_diffdiff(row.pointA, int(row.pointB[1:]))
+                    col_name = row.pointA+'_diffdiff'
                 ## それ以外 = 距離
                 else:
                     col_name = '{}-{}'.format(row.pointA, row.pointB)

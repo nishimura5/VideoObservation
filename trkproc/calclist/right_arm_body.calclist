@@ -1,6 +1,9 @@
-;comment=右腕(x,y)
+;comment=右手・右肘・右肩のxy座標
 pointA,pointB,func,legend,color
-3,x,*1,右肘x,#903f3f
-3,y,*1,右肘y,#a07070
 4,x,*1,右手x,#008080
 4,y,*1,右手y,#3fbcbc
+3,x,*1,右肘x,#903f3f
+3,y,*1,右肘y,#a07070
+2,x,*1,右肩x,#a17550
+2,y,*1,右肩y,#4590a1
+

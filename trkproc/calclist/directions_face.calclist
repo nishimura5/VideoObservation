@@ -1,4 +1,4 @@
-;comment=頭部方向
+;comment=頭部方向(Roll,Pitch,Yaw)
 pointA,pointB,func,legend,color
 roll,,*1,頭部(Roll),#904f4f
 pitch,,*1,頭部(Pitch),#4f904f

@@ -1,7 +1,9 @@
-;comment=首と腕(30 frames delta)
+;comment=首・手・肘・肩の速さ(30 frames delta)
 pointA,pointB,func,legend,color
 1,d30,*1,首(30f.),#904f4f
 4,d30,*1,右手(30f.),#008080
 7,d30,*1,左手(30f.),#ffa500
 3,d30,*1,右肘(30f.),#75a150
 6,d30,*1,左肘(30f.),#9045a1
+2,d30,*1,右肩(30f.),#a17550
+5,d30,*1,左肩(30f.),#4590a1

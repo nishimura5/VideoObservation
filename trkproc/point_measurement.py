@@ -96,12 +96,12 @@ class PointMeasurement:
         return dist_df
 
     ## フレーム間の移動量を計算
-    def calc_diff(self, point_code, step):
+    def calc_diff(self, point_code, step, suffix='diff'):
         try:
             diff_df = self.tar_trk_df.loc[pd.IndexSlice[:,:,point_code], :]
             diff_df = diff_df.groupby(['name']).diff(step)**2
 #            diff_df = pd.DataFrame(np.sqrt(diff_df['x'] + diff_df['y'])).set_index(['frame','name']).drop('code', axis=1)
-            diff_df = pd.DataFrame({'{}_diff'.format(point_code):(np.sqrt(diff_df['x'] + diff_df['y']))})
+            diff_df = pd.DataFrame({f'{point_code}_{suffix}':(np.sqrt(diff_df['x'] + diff_df['y']))})
             diff_df = diff_df.reset_index(['code'], drop=True)
 
         except Exception as e:
@@ -109,12 +109,21 @@ class PointMeasurement:
             raise Exception(e)
         return diff_df
 
+    def calc_diffdiff(self, point_code, step):
+        try:
+            diff_df = self.calc_diff(point_code, step, suffix='diffdiff')
+            diffdiff_df = diff_df.groupby(['name']).diff(step)
+        except Exception as e:
+            logger.error(self._traceback_parser(e))
+            raise Exception(e)
+        return diffdiff_df
+
     def get_point(self, point_code, new_column_name=None):
         tar_df = self.trk_df.loc[pd.IndexSlice[:,:,point_code],:].reset_index().set_index(['frame','name']).drop('code', axis=1)
         if new_column_name is None:
-            tar_df = tar_df.rename(columns={'x':'%s_x'%point_code, 'y':'%s_y'%point_code})
+            tar_df = tar_df.rename(columns={'x':f"{point_code}_x", 'y':f"{point_code}_y"})
         else:
-            tar_df = tar_df.rename(columns={'x':'%s_x'%new_column_name, 'y':'%s_y'%new_column_name})
+            tar_df = tar_df.rename(columns={'x':f"{new_column_name}_x", 'y':f"{new_column_name}_y"})
         return tar_df
 
     ## 外積
