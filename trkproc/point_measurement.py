@@ -17,11 +17,9 @@ class PointMeasurement:
         try:
             self.trk_df = pd.read_csv(trk_path, dtype=dtyp).set_index(['frame', 'name', 'code']).sort_index()
             if rolling_mean_window > 1:
-                ## pandas 1.1以降でgroupbyの仕様が変わっているみたい
-                ## name,codeでgroupbyするとframeが消えるので、
                 self.trk_df = self.trk_df.reset_index(['name', 'code'])
                 tar_df = self.trk_df.groupby(['name', 'code'], as_index=True).rolling(rolling_mean_window, center=True).mean()
-                tar_df = tar_df.drop(['name', 'code'], axis=1)
+                tar_df = tar_df.drop(['name', 'code'], axis=1, errors='ignore')
                 self.trk_df = tar_df.reset_index().set_index(['frame', 'name', 'code']).sort_index().dropna()
 #                self.trk_df = pd.DataFrame(tar_df).sort_index().reset_index().set_index(['frame', 'name', 'code'])
 
