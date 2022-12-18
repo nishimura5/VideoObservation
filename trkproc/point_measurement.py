@@ -21,11 +21,12 @@ class PointMeasurement:
                 ## name,codeでgroupbyするとframeが消えるので、
                 self.trk_df = self.trk_df.reset_index(['name', 'code'])
                 tar_df = self.trk_df.groupby(['name', 'code'], as_index=True).rolling(rolling_mean_window, center=True).mean()
-                self.trk_df = tar_df.reset_index().set_index(['frame', 'name', 'code']).sort_index()
+                tar_df = tar_df.drop(['name', 'code'], axis=1)
+                self.trk_df = tar_df.reset_index().set_index(['frame', 'name', 'code']).sort_index().dropna()
 #                self.trk_df = pd.DataFrame(tar_df).sort_index().reset_index().set_index(['frame', 'name', 'code'])
 
             self.trk_df = self.trk_df[~self.trk_df.index.duplicated()]
-            self.p2p_df = self.trk_df.stack(dropna=False).unstack(level=2)
+            self.p2p_df = self.trk_df.stack(dropna=False).unstack(level="code")
             self.tar_p2p_df = self.p2p_df
             self.tar_trk_df = self.trk_df
 
@@ -53,7 +54,9 @@ class PointMeasurement:
 
             min_pos = tar_frame[0]
             max_pos = tar_frame[-1]
-            logger.debug('min_pos={} max_pos={}'.format(min_pos, max_pos))
+            logger.debug(f'min_pos={min_pos} max_pos={max_pos}')
+
+            logger.debug(self.p2p_df)
             self.tar_p2p_df = self.p2p_df.loc[pd.IndexSlice[min_pos:max_pos, :], :]
             self.tar_trk_df = self.trk_df.loc[pd.IndexSlice[min_pos:max_pos, :, :], :]
 
