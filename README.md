@@ -1,6 +1,6 @@
 # BehavioralObservation
 動画を用いた観察を支援するツールです。
-最新版のダウンロードは[こちら(v.0.3.0.0)](https://github.com/nishimura5/VideoObservation/releases/download/v0.3.0.0-beta/BehavioralObservation_0300.zip)
+最新版のダウンロードは[こちら(v.0.4.1.0)](https://github.com/nishimura5/VideoObservation/releases/download/v0.4.1.0-beta/BehavioralObservation_installer_0410.zip)
 
 ## 各ツールの概要
 BehavioralObservationは下記3つのアプリケーションによって構成されています。
